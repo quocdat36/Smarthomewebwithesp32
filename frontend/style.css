@@ -1,0 +1,508 @@
+/* --- GLOBAL STYLES --- */
+:root {
+    --primary-color: #2979FF; /* Blue */
+    --secondary-color: #f0f2f5; /* Light gray background */
+    --text-color: #333;
+    --border-color: #e0e0e0;
+    --card-bg: #fff;
+    --sidebar-bg: #fff; /* Vẫn giữ nếu bạn có trang khác dùng sidebar */
+    --header-bg: #fff;
+    --icon-color: #5f6368;
+    --icon-blue: #2979FF;
+    --icon-yellow: #FFC107;
+    --icon-red: #F44336;
+    --text-danger: #F44336;
+    --text-info: #2196F3; /* Màu info khác một chút */
+    --text-warning: #FF9800; /* Màu warning khác một chút */
+    --status-connected-color: #4CAF50;
+    --status-disconnected-color: #F44336;
+    --status-connecting-color: #FFC107;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 16px; /* Cơ sở font size */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    font-weight: 500;
+    color: var(--text-color);
+}
+p {
+    margin-top:0;
+    margin-bottom: 0.5rem;
+}
+
+/* --- BUTTONS --- */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Căn giữa nội dung nút */
+    gap: 8px;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: #1a6eff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-secondary { /* Nút này có thể không dùng nhiều trong giao diện mới */
+    background-color: #e0e0e0;
+    color: var(--text-color);
+}
+.btn-secondary:hover {
+    background-color: #d5d5d5;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    border-radius: 6px;
+}
+
+/* --- LAYOUT CHO GIAO DIỆN ĐƠN GIẢN HÓA --- */
+.app-container-simplified {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* Ngăn scroll toàn trang nếu nội dung vừa */
+}
+
+.app-header {
+    background-color: var(--header-bg);
+    padding: 15px 25px; /* Giảm padding một chút */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    flex-shrink: 0; /* Header không co lại */
+}
+
+.app-header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    display: flex; /* Để icon và text thẳng hàng */
+    align-items: center;
+}
+.app-header .logo i {
+    color: var(--primary-color);
+    margin-right: 8px; /* Tăng khoảng cách */
+}
+.app-header .logo span {
+    font-weight: normal;
+    color: var(--primary-color);
+}
+
+.app-header .header-title {
+    font-size: 1.25rem; /* Tăng kích thước tiêu đề */
+    font-weight: 500;
+    color: var(--text-color);
+    /* Có thể thêm margin để căn giữa nếu cần */
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Tăng khoảng cách */
+}
+.user-profile .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-color); /* Thêm viền avatar */
+}
+.user-profile span {
+    font-weight: 500;
+}
+
+.main-content-simplified {
+    flex-grow: 1; /* Phần nội dung chính chiếm hết không gian còn lại */
+    padding: 25px; /* Tăng padding */
+    overflow-y: auto; /* Cho phép scroll nếu nội dung dài */
+    background-color: var(--secondary-color);
+}
+
+.control-panel-wrapper {
+    max-width: 1000px; /* Tăng max-width */
+    margin: 0 auto;
+}
+
+.panel-section {
+    background-color: var(--card-bg);
+    padding: 25px; /* Tăng padding */
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.07); /* Tăng đổ bóng */
+    margin-bottom: 30px; /* Tăng khoảng cách giữa các section */
+}
+
+.panel-section h2 {
+    margin-top: 0;
+    margin-bottom: 25px; /* Tăng khoảng cách */
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px; /* Tăng padding */
+    font-size: 1.4rem; /* Tăng kích thước */
+    display: flex;
+    align-items: center;
+}
+.panel-section h2 i {
+    margin-right: 12px; /* Tăng khoảng cách icon */
+    font-size: 1.3rem; /* Đồng bộ kích thước icon */
+}
+
+/* Info Grid cho Cảm biến */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+
+.info-item {
+    background-color: var(--secondary-color); /* Nền nhẹ cho từng item */
+    padding: 20px 15px; /* Tăng padding */
+    border-radius: 10px; /* Bo góc mềm mại hơn */
+    border: 1px solid var(--border-color); /* Thêm viền nhẹ */
+}
+.info-item i.icon-large {
+    font-size: 2.8rem; /* Tăng kích thước icon */
+    margin-bottom: 12px;
+    display: block;
+}
+.info-item p {
+    margin-bottom: 8px; /* Tăng khoảng cách */
+    color: #555;
+    font-size: 0.95em; /* Tăng nhẹ font */
+    font-weight: 500;
+}
+.info-item h3 {
+    margin: 0;
+    font-size: 1.8rem; /* Tăng kích thước số liệu */
+    color: var(--text-color);
+    font-weight: 600; /* Đậm hơn */
+}
+.text-danger { color: var(--text-danger); }
+.text-info { color: var(--text-info); }
+.text-warning { color: var(--text-warning); }
+
+.mqtt-status-item p {
+    font-weight: 500; /* Đậm hơn cho label MQTT */
+}
+.mqtt-status-item small#mqtt-status-text {
+    display: block;
+    margin-top: 8px; /* Tăng khoảng cách */
+    font-size: 0.85em; /* Tăng nhẹ font */
+    font-style: italic;
+}
+
+/* Controls Container và Cards */
+.controls-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Điều chỉnh minmax */
+    gap: 25px; /* Tăng khoảng cách */
+}
+
+.control-card-simplified {
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.control-card-simplified h4 {
+    margin-top: 0;
+    margin-bottom: 20px; /* Tăng khoảng cách */
+    font-size: 1.15rem; /* Tăng nhẹ font */
+    color: var(--text-color);
+    font-weight: 600;
+}
+.control-card-simplified h4 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.control-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+.control-card-simplified .switch {
+    margin-bottom: 8px;
+    transform: scale(1.1); /* To hơn một chút */
+}
+.control-status-text {
+    font-weight: bold;
+    font-size: 1.1rem; /* To hơn */
+    min-height: 1.1em; /* Đảm bảo không nhảy khi text thay đổi */
+}
+
+.mode-buttons-simplified {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 12px; /* Tăng khoảng cách nút */
+}
+.btn-mode-simplified {
+    padding: 10px 15px; /* To hơn một chút */
+    font-size: 0.95em;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    color: var(--text-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+    font-weight: 500;
+    flex-grow: 1; /* Các nút chiếm không gian đều */
+    max-width: 120px; /* Giới hạn chiều rộng nút */
+}
+.btn-mode-simplified:hover {
+    background-color: #e9e9e9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.btn-mode-simplified.btn-mode-active {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(41, 121, 255, 0.3);
+}
+
+.current-value-text {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 8px;
+}
+.current-value-text strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.threshold-control-simplified {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 10px; /* Khoảng cách giữa slider và text */
+}
+.threshold-control-simplified input[type="range"] {
+    flex-grow: 1;
+    cursor: pointer;
+}
+.threshold-control-simplified span#threshold-value-display {
+    min-width: 40px; /* Đảm bảo số không nhảy */
+    font-weight: bold;
+    font-size: 1rem; /* To hơn một chút */
+    background-color: #fff; /* Nền cho dễ đọc */
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+.control-card-simplified .btn.btn-sm.btn-primary { /* Nút "Cập nhật Ngưỡng" */
+    margin-top: 15px; /* Tăng khoảng cách */
+    width: auto; /* Để nút vừa với nội dung */
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* MQTT Status Indicator */
+.status-indicator { /* Đã có trong .info-card */
+    /* margin-top: 15px; */
+    /* font-size: 0.85em; */
+    /* text-align: right; */
+}
+.status-dot {
+    display: inline-block;
+    width: 12px; /* To hơn */
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 6px;
+    vertical-align: middle;
+    border: 1px solid rgba(0,0,0,0.1); /* Viền nhẹ */
+}
+.status-connected {
+    background-color: var(--status-connected-color);
+}
+.status-disconnected {
+    background-color: var(--status-disconnected-color);
+}
+.status-connecting {
+    background-color: var(--status-connecting-color);
+    animation: pulse-connecting 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-connecting {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.7); opacity: 0.7; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+/* --- TOGGLE SWITCH (Giữ nguyên từ code cũ của bạn, đã hoạt động tốt) --- */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+.slider.round {
+    border-radius: 24px;
+}
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Placeholder features (nếu bạn bật) */
+.placeholder-features { /* Đã có style ở trên, chỉ thêm để nhóm lại */
+    /* margin-top: 30px; */
+}
+.placeholder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* Điều chỉnh */
+    gap: 20px;
+    text-align: center;
+}
+.placeholder-item {
+    background-color: var(--secondary-color);
+    padding: 25px 15px;
+    border-radius: 10px;
+    color: #b0b0b0; /* Màu mờ hơn */
+    border: 1px dashed var(--border-color); /* Viền đứt */
+    cursor: not-allowed; /* Con trỏ không cho phép */
+}
+.placeholder-item i {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+.placeholder-item p {
+    font-weight: 500;
+    margin:0;
+}
+
+
+/* --- RESPONSIVE (Basic example, có thể cần điều chỉnh thêm) --- */
+@media (max-width: 768px) {
+    .app-header {
+        padding: 15px;
+        flex-direction: column; /* Header xếp chồng trên mobile */
+        gap: 10px;
+    }
+    .app-header .logo {
+        font-size: 1.3rem;
+    }
+    .app-header .header-title {
+        font-size: 1.1rem;
+        order: -1; /* Đẩy title lên trên user profile nếu cần */
+        margin-bottom: 5px;
+    }
+    .user-profile {
+        width: 100%;
+        justify-content: flex-end; /* Đẩy user profile sang phải */
+    }
+
+    .main-content-simplified {
+        padding: 15px;
+    }
+    .panel-section {
+        padding: 15px;
+    }
+    .panel-section h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+    }
+    .info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Điều chỉnh cho mobile */
+        gap: 15px;
+    }
+    .info-item i.icon-large {
+        font-size: 2.2rem;
+    }
+    .info-item h3 {
+        font-size: 1.4rem;
+    }
+    .controls-container {
+        grid-template-columns: 1fr; /* Mỗi control card một hàng trên mobile */
+        gap: 20px;
+    }
+    .control-card-simplified {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-grid {
+        grid-template-columns: 1fr 1fr; /* 2 cột trên màn hình rất nhỏ */
+    }
+    .btn-mode-simplified {
+        padding: 8px 10px; /* Nút nhỏ hơn */
+        font-size: 0.85em;
+    }
+}

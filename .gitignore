@@ -1,0 +1,5 @@
+# Bỏ qua các thư mục chứa thư viện của Node.js
+/backend/node_modules
+
+# Bỏ qua các file môi trường (nếu có sau này)
+.env

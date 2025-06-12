@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KDT Smart Home Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container-simplified">
+
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fas fa-home"></i> KDT<span>Home</span>
+            </div>
+            <div class="header-title">
+            <strong style="font-size: 0.8cm;color: #027adc;">ESP32 Smart Control</strong>
+            </div>
+            <div class="user-profile">
+                <img src="asset\thumbnails_kim dinh thai.jpg" alt="User Avatar" class="avatar">
+                <span>Dr. Kim Dinh Thai</span>
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT - Bảng Điều Khiển Chính -->
+        <main class="main-content-simplified">
+            <div class="control-panel-wrapper">
+               
+                <section class="panel-section environment-status">
+                    <h2><i class="fas fa-tachometer-alt"></i> Trạng thái Hệ thống</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-thermometer-half icon-large text-danger"></i>
+                            <p>Nhiệt độ</p>
+                            <h3 id="temperature-value">-- °C</h3>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-tint icon-large text-info"></i>
+                            <p>Độ ẩm</p>
+                            <h3 id="humidity-value">-- %</h3>
+                        </div>
+                        <div class="info-item">
+                            <i class="far fa-lightbulb icon-large text-warning"></i>
+                            <p>Ánh sáng</p>
+                            <h3 id="light-percent-value">-- %</h3>
+                        </div>
+                        <div class="info-item mqtt-status-item">
+                            <p>Kết nối MQTT</p>
+                            <span id="mqtt-status-indicator" class="status-dot status-disconnected"></span>
+                            <small id="mqtt-status-text">Đang kết nối...</small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel-section device-controls">
+                    <h2><i class="fas fa-toggle-on"></i> Điều khiển Thiết bị</h2>
+                    <div class="controls-container">
+                        <!-- Điều khiển Đèn -->
+                        <div class="control-card-simplified">
+                            <h4><i class="fas fa-lightbulb"></i> Đèn</h4>
+                            <div class="control-element">
+                                <label class="switch">
+                                    <input type="checkbox" id="relay-toggle-switch">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span id="relay-status-text" class="control-status-text">TẮT</span>
+                            </div>
+                        </div>
+
+                        <!-- Điều khiển Chế độ -->
+                        <div class="control-card-simplified">
+                            <h4><i class="fas fa-cogs"></i> Chế độ</h4>
+                            <div class="control-element mode-buttons-simplified">
+                                <button id="mode-auto-btn" class="btn btn-mode-simplified" data-mode="AUTO">AUTO</button>
+                                <button id="mode-manual-btn" class="btn btn-mode-simplified" data-mode="MANUAL">MANUAL</button>
+                            </div>
+                            <p class="current-value-text">Hiện tại: <strong id="current-mode-text">--</strong></p>
+                        </div>
+
+                        <!-- Điều khiển Ngưỡng Ánh sáng -->
+                        <div class="control-card-simplified">
+                            <h4><i class="fas fa-sun"></i> Ngưỡng Sáng (AUTO)</h4>
+                            <div class="control-element threshold-control-simplified">
+                                <input type="range" id="threshold-slider" min="0" max="4095" value="800">
+                                <span id="threshold-value-display">800</span>
+                            </div>
+                            <button id="set-threshold-btn" class="btn btn-sm btn-primary">Cập nhật Ngưỡng</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="panel-section placeholder-features" style="display: none;"> 
+                    <h2><i class="fas fa-layer-group"></i> Tính năng khác (Ví dụ)</h2>
+                    <div class="placeholder-grid">
+                        <div class="placeholder-item">
+                            <i class="fas fa-video"></i>
+                            <p>Cameras</p>
+                        </div>
+                        <div class="placeholder-item">
+                            <i class="fas fa-users"></i>
+                            <p>Members</p>
+                        </div>
+                        <div class="placeholder-item">
+                            <i class="fas fa-tasks"></i>
+                            <p>Routines</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="script-control.js"></script>
+</body>
+</html>

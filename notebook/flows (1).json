@@ -1,0 +1,627 @@
+[
+    {
+        "id": "771355374948c12f",
+        "type": "tab",
+        "label": "HIVEMQ",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9ea95be25a42c254",
+        "type": "mqtt in",
+        "z": "771355374948c12f",
+        "name": "",
+        "topic": "esp32/dht11",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "ed96e13f2437c5eb",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 390,
+        "y": 160,
+        "wires": [
+            [
+                "0dc85989ed0ec17c",
+                "fe8b3b550840fda9",
+                "339c4fdb1dfeafa0"
+            ]
+        ]
+    },
+    {
+        "id": "0dc85989ed0ec17c",
+        "type": "debug",
+        "z": "771355374948c12f",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "ad6479637dc803e1",
+        "type": "ui_gauge",
+        "z": "771355374948c12f",
+        "name": "",
+        "group": "a56f8967af78bfb3",
+        "order": 1,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Nhiệt độ",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 780,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "fe8b3b550840fda9",
+        "type": "function",
+        "z": "771355374948c12f",
+        "name": "function 1",
+        "func": "var temp = Math.round(msg.payload.temperature * 10) / 10\nmsg.payload = temp\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 240,
+        "wires": [
+            [
+                "ad6479637dc803e1",
+                "7c676b81086202c7"
+            ]
+        ]
+    },
+    {
+        "id": "339c4fdb1dfeafa0",
+        "type": "function",
+        "z": "771355374948c12f",
+        "name": "function 2",
+        "func": "var temp = msg.payload.humidity\nmsg.payload = temp\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 300,
+        "wires": [
+            [
+                "93e197fed3da460c",
+                "e66f2fa16daf1575"
+            ]
+        ]
+    },
+    {
+        "id": "93e197fed3da460c",
+        "type": "ui_gauge",
+        "z": "771355374948c12f",
+        "name": "",
+        "group": "a56f8967af78bfb3",
+        "order": 2,
+        "width": 4,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Độ ẩm",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 770,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "7c676b81086202c7",
+        "type": "ui_chart",
+        "z": "771355374948c12f",
+        "name": "",
+        "group": "a56f8967af78bfb3",
+        "order": 3,
+        "width": 8,
+        "height": 4,
+        "label": "Đồ thị nhiệt độ",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 800,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e66f2fa16daf1575",
+        "type": "ui_chart",
+        "z": "771355374948c12f",
+        "name": "",
+        "group": "a56f8967af78bfb3",
+        "order": 4,
+        "width": 8,
+        "height": 4,
+        "label": "Đồ thị độ ẩm",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": true,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 790,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7c4e893eba7e2ac0",
+        "type": "mqtt out",
+        "z": "771355374948c12f",
+        "name": "esp8266/client",
+        "topic": "esp8266/client",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "ed96e13f2437c5eb",
+        "x": 800,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "a9007d0864d4b435",
+        "type": "function",
+        "z": "771355374948c12f",
+        "name": "function 3",
+        "func": "var input = msg.payload;\nif(input===true){\n    msg.payload = \"{\\\"out1\\\":1}\";\n}else{\n    msg.payload = \"{\\\"out1\\\":0}\";\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 500,
+        "wires": [
+            [
+                "7c4e893eba7e2ac0"
+            ]
+        ]
+    },
+    {
+        "id": "897690b2a06913da",
+        "type": "ui_switch",
+        "z": "771355374948c12f",
+        "name": "Button1",
+        "label": "Switch1",
+        "tooltip": "",
+        "group": "734b5b45ad3ff782",
+        "order": 2,
+        "width": 2,
+        "height": 2,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 380,
+        "y": 500,
+        "wires": [
+            [
+                "a9007d0864d4b435"
+            ]
+        ]
+    },
+    {
+        "id": "7858029336c96f06",
+        "type": "function",
+        "z": "771355374948c12f",
+        "name": "function 4",
+        "func": "var input = msg.payload;\nif(input===true){\n    msg.payload = \"{\\\"out2\\\":1}\";\n}else{\n    msg.payload = \"{\\\"out2\\\":0}\";\n}\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 580,
+        "wires": [
+            [
+                "7c4e893eba7e2ac0"
+            ]
+        ]
+    },
+    {
+        "id": "9c5fcf2fb05c9649",
+        "type": "ui_switch",
+        "z": "771355374948c12f",
+        "name": "Button2",
+        "label": "Switch2",
+        "tooltip": "",
+        "group": "734b5b45ad3ff782",
+        "order": 8,
+        "width": 2,
+        "height": 2,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 380,
+        "y": 580,
+        "wires": [
+            [
+                "7858029336c96f06"
+            ]
+        ]
+    },
+    {
+        "id": "5075ea84744fce0f",
+        "type": "mqtt in",
+        "z": "771355374948c12f",
+        "name": "",
+        "topic": "esp8266/out",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "ed96e13f2437c5eb",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "d8c222749274f004",
+                "500108f2b1adc441"
+            ]
+        ]
+    },
+    {
+        "id": "d8c222749274f004",
+        "type": "function",
+        "z": "771355374948c12f",
+        "name": "function 5",
+        "func": "var temp = msg.payload.out1\nmsg.payload = (msg.payload.out1===1)?true:false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 680,
+        "wires": [
+            [
+                "0dac199649ae800e"
+            ]
+        ]
+    },
+    {
+        "id": "500108f2b1adc441",
+        "type": "function",
+        "z": "771355374948c12f",
+        "name": "function 6",
+        "func": "var temp = msg.payload.out2\nmsg.payload = (msg.payload.out2 === 1) ? true : false;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 740,
+        "wires": [
+            [
+                "084775e86f32b23e"
+            ]
+        ]
+    },
+    {
+        "id": "0dac199649ae800e",
+        "type": "ui_led",
+        "z": "771355374948c12f",
+        "order": 3,
+        "group": "734b5b45ad3ff782",
+        "width": 4,
+        "height": 2,
+        "label": "Out1",
+        "labelPlacement": "left",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "#808080",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Out1",
+        "x": 770,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "084775e86f32b23e",
+        "type": "ui_led",
+        "z": "771355374948c12f",
+        "order": 9,
+        "group": "734b5b45ad3ff782",
+        "width": 4,
+        "height": 2,
+        "label": "Out2",
+        "labelPlacement": "left",
+        "labelAlignment": "right",
+        "colorForValue": [
+            {
+                "color": "#808080",
+                "value": "false",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ffff00",
+                "value": "true",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Out2",
+        "x": 770,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "cd1d84a63d587090",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "5db5a9de2838a0de",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 4,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "805761bb3f82fa76",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 5,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "91e7c6dfa2faf8ec",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 6,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "b24a2a469d65abbd",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 7,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "9960ef3291d5a55a",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 10,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "cde1f28da376a238",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 11,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "22fc395075870377",
+        "type": "ui_spacer",
+        "z": "771355374948c12f",
+        "name": "spacer",
+        "group": "734b5b45ad3ff782",
+        "order": 12,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "ed96e13f2437c5eb",
+        "type": "mqtt-broker",
+        "name": "HiveMQ",
+        "broker": "11a47c24bc5f4dcea8db3370434ae364.s1.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "a56f8967af78bfb3",
+        "type": "ui_group",
+        "name": "SENSOR",
+        "tab": "8ff4928f3ec236aa",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "734b5b45ad3ff782",
+        "type": "ui_group",
+        "name": "CONTROL",
+        "tab": "8ff4928f3ec236aa",
+        "order": 2,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8ff4928f3ec236aa",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
