@@ -1,0 +1,144 @@
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
+#include <DHT.h>
+#include <Wire.h>
+
+// OLED settings
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET    -1
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+// DHT11 settings
+#define DHTPIN 27
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// Pin configuration
+#define LDR_PIN     34
+#define RELAY_PIN   12
+#define BUTTON_PIN  14
+// #define RESET_PIN   27  // Nếu dùng nút reset chế độ
+
+int threshold = 500;  // Ngưỡng ánh sáng (theo giá trị đã đảo chiều)
+bool lightOn = false;
+bool manualMode = false;
+unsigned long lastManualPressTime = 0;
+unsigned long manualTimeout = 5000;  // 5 giây
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(LDR_PIN, INPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  // pinMode(RESET_PIN, INPUT_PULLUP);
+
+  dht.begin();
+
+  if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+    Serial.println(F("Không tìm thấy màn hình OLED"));
+    while (true);  // Dừng nếu không có màn hình
+  }
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  display.println("Khoi dong...");
+  display.display();
+  delay(1000);
+
+  Serial.println("Smart Home System - ESP32");
+}
+
+void loop() {
+  // Đọc cảm biến ánh sáng và đảo chiều giá trị
+  int rawLight = analogRead(LDR_PIN);
+  int lightLevel = 4095 - rawLight;
+  int lightPercent = map(lightLevel, 0, 4095, 0, 100);
+
+  int buttonState = digitalRead(BUTTON_PIN);
+  // int resetState = digitalRead(RESET_PIN);
+
+  // // Nếu dùng nút reset về chế độ tự động
+  // if (resetState == LOW) {
+  //   manualMode = false;
+  //   Serial.println("Chuyen ve che do tu dong (RESET)");
+  //   delay(300);
+  // }
+
+  // Xử lý nút nhấn chuyển chế độ thủ công
+  if (buttonState == LOW) {
+    manualMode = true;
+    lightOn = !lightOn;
+    digitalWrite(RELAY_PIN, lightOn);
+    lastManualPressTime = millis();
+    Serial.println(lightOn ? "THU CONG: Bat den" : "THU CONG: Tat den");
+    delay(300);
+  }
+
+  // Tự động quay lại chế độ cảm biến sau timeout
+  if (manualMode && millis() - lastManualPressTime > manualTimeout) {
+    manualMode = false;
+    Serial.println("Tu chuyen ve che do cam bien sau timeout");
+  }
+
+  // Điều khiển đèn theo cảm biến nếu ở chế độ tự động
+  if (!manualMode) {
+    if (lightLevel < threshold) {
+      lightOn = true;
+    } else {
+      lightOn = false;
+    }
+    digitalWrite(RELAY_PIN, lightOn);
+  }
+
+  // Đọc nhiệt độ và độ ẩm
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+
+  // In ra Serial
+  Serial.print("Anh sang: ");
+  Serial.print(lightPercent);
+  Serial.print(" % | Den: ");
+  Serial.print(lightOn ? "BAT" : "TAT");
+  Serial.print(" | Che do: ");
+  Serial.println(manualMode ? "THU CONG" : "TU DONG");
+  Serial.print("Nhiet do: ");
+  Serial.print(t);
+  Serial.print(" *C | Do am: ");
+  Serial.println(h);
+
+  // Hiển thị lên OLED
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.print("Anh sang: ");
+  display.print(lightPercent);
+  display.println(" %");
+
+  display.print("Den: ");
+  display.println(lightOn ? "BAT" : "TAT");
+
+  display.print("Che do: ");
+  display.println(manualMode ? "THU CONG" : "TU DONG");
+
+  display.print("Nhiet do: ");
+  if (isnan(t)) {
+    display.println("Loi");
+  } else {
+    display.print(t);
+    display.println(" C");
+  }
+
+  display.print("Do am: ");
+  if (isnan(h)) {
+    display.println("Loi");
+  } else {
+    display.print(h);
+    display.println(" %");
+  }
+
+  display.display();
+  delay(200);
+}
